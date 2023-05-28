@@ -1,52 +1,68 @@
 const Order = require('../models/orders');
 const express = require('express');
 const router = express.Router();
+const { ResponseBody, sendResponse } = require('../../lib/SendResponse');
+
 // const { createOrderValidator, updateOrderValidator, getOrderValidator, deleteOrderValidator } = require('../validators/orderValidator');
 
 module.exports = {
 
 
     async createOrder(req, res) {
-        try {
-            const order = new Order(req.body);
-            await order.save();
-            res.status(201).send(order);
-        } catch (error) {
-            res.status(400).send(error);
+
+        const order = new Order(req.body);
+        await order.save();
+
+        if (order) {
+            const responseBody = new ResponseBody(201, 'order Created successfully', order);
+            // Send the response with the appropriate headers
+            res.status(responseBody.statusCode)
+                .json(responseBody);
+        } else {
+            // Handle the case when user is null
+            res.status(404).send('order not found');
         }
     },
 
     async updateOrder(req, res) {
-
-
-        try {
-            const order = await Order.findByIdAndUpdate(
-                req.body.id,
-                req.body, { new: true }
-            );
-            res.send(order);
-        } catch (error) {
-            res.status(400).send(error);
+        const order = await Order.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        if (order) {
+            const responseBody = new ResponseBody(201, 'order updated successfully', order);
+            // Send the response with the appropriate headers
+            res.status(responseBody.statusCode)
+                .json(responseBody);
+        } else {
+            // Handle the case when user is null
+            res.status(404).send('order not found');
         }
     },
 
     async getOrder(req, res) {
-        try {
-            const order = await Order.findById(req.params.id)
-                .populate('customerId')
-                .populate('productId');
-            res.send(order);
-        } catch (error) {
-            res.status(400).send(error);
+        const order = await Order.findById(req.params.id)
+            .populate('customerId')
+            .populate('productId');
+        if (order) {
+            const responseBody = new ResponseBody(201, 'Order fetched successfully', order);
+            // Send the response with the appropriate headers
+            res.status(responseBody.statusCode)
+                .json(responseBody);
+        } else {
+            // Handle the case when user is null
+            res.status(404).send('order not found');
         }
     },
 
     async deleteOrder(req, res) {
-        try {
-            const order = await Order.findByIdAndDelete(req.params.id);
-            res.send(order);
-        } catch (error) {
-            res.status(400).send(error);
+
+        const order = await Order.findByIdAndDelete(req.params.id);
+        if (order) {
+            const responseBody = new ResponseBody(201, 'order deleted successfully', order);
+            // Send the response with the appropriate headers
+            res.status(responseBody.statusCode)
+                .json(responseBody);
+        } else {
+            // Handle the case when user is null
+            res.status(404).send('order not found');
         }
     }
 };

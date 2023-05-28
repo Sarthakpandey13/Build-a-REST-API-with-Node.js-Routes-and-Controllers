@@ -18,14 +18,15 @@
         "express": "^4.18.2",
         "express-validator": "^7.0.1",
         "http-errors": "^2.0.0",
+        "ioredis": "^5.3.2",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.0.2",
         "morgan": "^1.10.0",
         "node-redis": "^0.1.7",
         "nodemon": "^2.0.21",
         "redis": "^4.6.6",
-        "redis-clients": "^0.5.2",
-        "require": "^2.4.20",
+        "redis-clients": "^0.4.0",
+        "require": "^0.4.4",
         "util": "^0.12.5"
     }
 }

@@ -4,14 +4,13 @@ require('dotenv').config()
 require('./api/helpers/init_redis');
 const bodyParser = require('body-parser');
 require('./api/helpers/init_mongodb');
-
 require('./api/helpers/init_redis');
 const User_routes = require('./api/routes/user');
 const Product = require('./api/routes/user');
 const order = require('./api/routes/user');
-const loginRoute = require('./api/routes/login');
+const loginRoute = require('./api/routes/user');
 const app = express();
-
+// const Redis = require('ioredis');
 // Set up middleware
 app.use(express.json());
 app.use(morgan('dev'))

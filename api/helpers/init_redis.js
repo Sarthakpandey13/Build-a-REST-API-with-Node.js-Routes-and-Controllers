@@ -1,7 +1,9 @@
+'use strict';
+
 const redis = require('redis');
 
-const client = redis.createClient({ connect_timeout: 5000, });
-// (async() => { client.on('error', (err) => console.log('Redis Client Error', err)); })();
+const client = redis.createClient({ connectTimeout: 50000, });
+(async() => { client.on('error', (err) => console.log('Redis Client Error', err)); })();
 (async() => {
     await client.connect();
 })();
@@ -15,4 +17,5 @@ client.on("error", (err) => {
 process.on('SIGINT', () => {
     client.quit()
 })
-module.exports = client
+
+module.exports = client;

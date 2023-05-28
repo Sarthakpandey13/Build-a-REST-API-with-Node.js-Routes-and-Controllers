@@ -3,7 +3,16 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const productController = require('../controllers/productController');
 const orderController = require('../controllers/orderController');
+const login = require('../controllers/login');
+
 const checkAuth = require('../helpers/authMiddleware');
+const { validateSignUp, validateLogin } = require('../middlewares/validateMiddleware')
+
+
+// login 
+router.post('/login', validateLogin, login.login);
+router.post('/register', validateSignUp, login.register);
+
 
 router.post('/createUser', checkAuth, userController.createUser);
 router.post('/updateUser/:id', checkAuth, userController.updateUser);
